@@ -9,3 +9,9 @@ Icon?
 .Spotlight-V100
 .Trashes
 .fseventsd
+
+#Terraform/
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
