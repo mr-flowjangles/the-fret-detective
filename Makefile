@@ -4,10 +4,7 @@ up:
 	@echo "Starting services..."
 	@docker compose up --build -d
 	@echo ""
-	@echo "All services are running"
-	@echo "Site: http://localhost:8080"
-	@echo "API Docs: http://localhost:8080/api/docs"
-	@echo "Health Check: http://localhost:8080/api/health"
+	@echo "Site running at http://localhost:3000"
 	@echo ""
 	@echo "View logs: make logs"
 	@echo "Stop services: make down"
@@ -27,8 +24,8 @@ logs:
 
 help:
 	@echo "Available commands:"
-	@echo "  make up     - Start all services"
-	@echo "  make down   - Stop all services"
-	@echo "  make build  - Rebuild all images"
-	@echo "  make logs   - View service logs"
-	@echo "  make help   - Show this help message"
+	@echo "  make up     - Start the dev server"
+	@echo "  make down   - Stop the dev server"
+	@echo "  make build  - Rebuild images"
+	@echo "  make logs   - View logs"
+	@echo "  make help   - Show this help"
