@@ -22,7 +22,7 @@ jobs:
 
       - name: Start local server
         run: |
-          npx http-server app -p 8080 -s &
+          npx http-server app -p 3000 -s &
           sleep 3
 
       - name: Run 508 accessibility scan
