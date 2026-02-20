@@ -1,12 +1,29 @@
-# Data source for existing Route 53 hosted zone
-data "aws_route53_zone" "main" {
-  name         = var.domain_name
-  private_zone = false
+###############################################################################
+# route53.tf
+#
+# DNS configuration for thefretdetective.com
+#
+# IMPORTANT: After running terraform apply, you'll need to update your
+# domain registrar's nameservers to point to the Route 53 nameservers.
+# The nameservers will be shown in the terraform output.
+#
+# If you already have Route 53 managing this domain, you can import
+# the existing zone instead of creating a new one:
+#   terraform import aws_route53_zone.main <zone-id>
+###############################################################################
+
+# Hosted zone for your domain
+resource "aws_route53_zone" "main" {
+  name = var.domain_name
+
+  tags = {
+    Name = "Fret Detective DNS Zone"
+  }
 }
 
-# A record for apex domain (robrose.info)
-resource "aws_route53_record" "apex" {
-  zone_id = data.aws_route53_zone.main.zone_id
+# A record - points thefretdetective.com to CloudFront
+resource "aws_route53_record" "root" {
+  zone_id = aws_route53_zone.main.zone_id
   name    = var.domain_name
   type    = "A"
 
@@ -17,9 +34,9 @@ resource "aws_route53_record" "apex" {
   }
 }
 
-# A record for www subdomain (www.robrose.info)
+# A record - points www.thefretdetective.com to CloudFront
 resource "aws_route53_record" "www" {
-  zone_id = data.aws_route53_zone.main.zone_id
+  zone_id = aws_route53_zone.main.zone_id
   name    = "www.${var.domain_name}"
   type    = "A"
 
@@ -30,9 +47,9 @@ resource "aws_route53_record" "www" {
   }
 }
 
-# AAAA records for IPv6 support
-resource "aws_route53_record" "apex_ipv6" {
-  zone_id = data.aws_route53_zone.main.zone_id
+# AAAA record (IPv6) - points thefretdetective.com to CloudFront
+resource "aws_route53_record" "root_ipv6" {
+  zone_id = aws_route53_zone.main.zone_id
   name    = var.domain_name
   type    = "AAAA"
 
@@ -43,8 +60,9 @@ resource "aws_route53_record" "apex_ipv6" {
   }
 }
 
+# AAAA record (IPv6) - points www.thefretdetective.com to CloudFront
 resource "aws_route53_record" "www_ipv6" {
-  zone_id = data.aws_route53_zone.main.zone_id
+  zone_id = aws_route53_zone.main.zone_id
   name    = "www.${var.domain_name}"
   type    = "AAAA"
 

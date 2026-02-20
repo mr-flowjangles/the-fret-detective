@@ -1,53 +1,63 @@
+###############################################################################
+# variables.tf
+#
+# All configurable inputs for the infrastructure.
+# Override these in terraform.tfvars or via -var flags.
+###############################################################################
+
 variable "aws_region" {
-  description = "AWS region for resources"
+  description = "AWS region for main resources (S3 bucket location)"
   type        = string
   default     = "us-east-1"
 }
 
-variable "domain_name" {
-  description = "Domain name for the resume site"
-  type        = string
-  default     = "robrose.info"
-}
-
-variable "project_name" {
-  description = "Project name for resource naming"
-  type        = string
-  default     = "aws-serverless-resume"
-}
-
 variable "environment" {
-  description = "Environment (dev, staging, prod)"
+  description = "Environment name (prod, staging, dev)"
   type        = string
   default     = "prod"
 }
 
-variable "recaptcha_secret_key" {
-  description = "Google reCAPTCHA secret key for contact form"
+variable "domain_name" {
+  description = "Primary domain name for the website"
   type        = string
-  sensitive   = true
-  default     = ""
+  default     = "thefretdetective.com"
 }
 
-variable "notification_email" {
-  description = "Email address to receive contact form notifications"
-  type        = string
-  default     = ""
+variable "subject_alternative_names" {
+  description = "Additional domain names for the SSL certificate"
+  type        = list(string)
+  default     = ["www.thefretdetective.com"]
 }
 
-variable "openai_api_key" {
-  description = "OpenAI API key for embeddings"
+variable "bucket_name" {
+  description = "S3 bucket name for hosting static files (must be globally unique)"
   type        = string
-  sensitive   = true
+  default     = "thefretdetective-website"
 }
 
-variable "anthropic_api_key" {
-  description = "Anthropic API key for chatbot"
+variable "price_class" {
+  description = "CloudFront price class - controls which edge locations are used"
   type        = string
-  sensitive   = true
+  default     = "PriceClass_100" # US, Canada, Europe only (cheapest)
+  # Other options:
+  # "PriceClass_200" - US, Canada, Europe, Asia, Middle East, Africa
+  # "PriceClass_All" - All edge locations (most expensive)
 }
 
-variable "api_gateway_id" {
-  description = "API Gateway REST API ID"
-  type        = string
+variable "min_ttl" {
+  description = "Minimum time (seconds) objects stay in CloudFront cache"
+  type        = number
+  default     = 0
+}
+
+variable "default_ttl" {
+  description = "Default time (seconds) objects stay in CloudFront cache"
+  type        = number
+  default     = 86400 # 1 day
+}
+
+variable "max_ttl" {
+  description = "Maximum time (seconds) objects stay in CloudFront cache"
+  type        = number
+  default     = 31536000 # 1 year
 }
