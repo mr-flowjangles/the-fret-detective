@@ -3,32 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- CONFIGURABLE: Page title -->
-    <title>YourBot — Your Bot Description</title>
-
+    <title>The Fret Detective</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Shared bot factory styles -->
     <link rel="stylesheet" href="bot_styles/bot-factory.css" />
+    <!-- Guitar-specific styles (tab rendering) -->
+    <link rel="stylesheet" href="bot_styles/guitar/guitar.css" />
   </head>
   <body>
     <!-- ================================================================
          HEADER
-         - Replace image src with your logo or avatar
-         - Update title and subtitle
-         - Badge text is optional (e.g., Beta, v1, Live)
          ================================================================ -->
     <header class="site-header">
       <div class="header-logo-area">
-        <img src="img/bot-factory.png" alt="Logo" class="header-image" />
+        <img
+          src="assets/guitar/guitarLogo.png"
+          alt="Guitar Image"
+          class="header-image"
+        />
       </div>
       <div class="header-text">
-        <div class="header-title">YourBot</div>
+        <div class="header-title">The Fret Detective</div>
         <div class="header-subtitle">
-          A short description of what your bot does
+          Let me fret the details and help you learn guitar!
         </div>
       </div>
       <span class="header-badge">Beta</span>
@@ -36,93 +38,77 @@
 
     <!-- ================================================================
          LEFT NAV
-         - Update links to match your bot's knowledge areas
-         - href values should match section IDs in main content
-         - Emoji icons are optional, swap for whatever fits
          ================================================================ -->
     <nav class="site-nav">
       <div class="nav-section-label">Topics</div>
-      <a href="#chat" class="active"><span class="nav-icon">💬</span> Chat</a>
-      <a href="#topic-1"><span class="nav-icon">📖</span> Topic 1</a>
-      <a href="#topic-2"><span class="nav-icon">🔧</span> Topic 2</a>
-      <a href="#topic-3"><span class="nav-icon">📊</span> Topic 3</a>
+      <a href="#chat" class="active"> Chat </a>
+      <a href="#Reviews"> Reviews (Coming Soon) </a>
 
-      <div class="nav-section-label">More</div>
-      <a href="#about"><span class="nav-icon">ℹ️</span> About</a>
+      <div class="nav-section-label">Reference</div>
+      <a href="#about"> About </a>
 
       <div class="nav-spacer"></div>
-      <div class="nav-footer">
-        Built with
-        <a
-          href="https://github.com/mr-flowjangles/bot-factory-ui"
-          target="_blank"
-          rel="noopener noreferrer"
-          >Bot Factory UI</a
-        >
-      </div>
+      <div class="nav-footer">Built with <a href="#">Bot Factory</a></div>
     </nav>
 
     <!-- ================================================================
          MAIN CONTENT
-         - The chat section is the embedded chatbot
-         - Add more sections below for static content pages
-         - Each section ID should match a nav href above
          ================================================================ -->
     <main class="main-content">
-      <!-- CHAT SECTION -->
       <section class="section" id="chat">
-        <!-- CONFIGURABLE: Section heading -->
-        <h2 class="section-title">Ask YourBot</h2>
+        <h2 class="section-title">Ask The Fret Detective</h2>
 
         <div class="chat-container">
           <div class="chat-header">
             <div class="chat-header-dot"></div>
-            <!-- CONFIGURABLE: Chat header name -->
-            <span class="chat-header-title">YourBot</span>
+            <span class="chat-header-title">The Fret Detective</span>
             <span class="chat-header-status">Online</span>
           </div>
 
           <div class="chat-messages" id="chatMessages">
-            <!-- CONFIGURABLE: Welcome message (keep text on same line as div to avoid extra whitespace) -->
             <div class="chat-message bot">
-              <div class="bot-label">YourBot</div>
-              Hi! I'm YourBot. Ask me anything about [your topic]. What would
-              you like to know?
+              <div class="bot-label">The Fret Detective</div>
+              Hey! Ask me anything about electric guitar — restringing, tuning,
+              chords, theory. What do you want to learn?
             </div>
           </div>
 
-          <!-- CONFIGURABLE: Suggestion chips — match to your bot's knowledge -->
           <div class="chat-suggestions" id="chatSuggestions">
-            <span class="suggestion-chip" onclick="sendSuggestion(this)"
-              >First question?</span
-            >
-            <span class="suggestion-chip" onclick="sendSuggestion(this)"
-              >Second question?</span
-            >
-            <span class="suggestion-chip" onclick="sendSuggestion(this)"
-              >Third question?</span
-            >
+            <button class="suggestion-chip" onclick="sendSuggestion(this)">
+              How do I restring my guitar?
+            </button>
+            <button class="suggestion-chip" onclick="sendSuggestion(this)">
+              Show me a G major triad
+            </button>
+            <button class="suggestion-chip" onclick="sendSuggestion(this)">
+              What is the CAGED system?
+            </button>
+            <button class="suggestion-chip" onclick="sendSuggestion(this)">
+              How do I tune my guitar?
+            </button>
           </div>
 
           <div class="chat-input-area">
-            <!-- CONFIGURABLE: Input placeholder -->
-            <input type="text" id="chatInput" placeholder="Ask a question..." />
+            <input
+              type="text"
+              id="chatInput"
+              placeholder="Ask about guitar..."
+            />
             <button class="chat-send-btn" onclick="sendMessage()">Send</button>
           </div>
         </div>
       </section>
 
-      <!-- ABOUT SECTION — Customize or remove -->
       <section class="section" id="about">
-        <h2 class="section-title">About</h2>
+        <h2 class="section-title">About The Fret Detective</h2>
         <div class="card">
-          <h3>How YourBot Works</h3>
-          <p class="card-subtitle">Built with the Bot Factory framework</p>
+          <h3>What is this?</h3>
           <p>
-            YourBot uses semantic search to find relevant answers from its
-            knowledge base, then generates natural responses using Claude.
-            Replace this text with a description of your bot and what it knows
-            about.
+            The Fret Detective is a RAG-powered chatbot built with the Bot
+            Factory framework. It uses OpenAI embeddings for semantic search
+            across 60+ guitar knowledge entries and Claude Sonnet for natural
+            language responses. Ask it about restringing, tuning, triads, barre
+            chords, progressions, or the CAGED system.
           </p>
         </div>
       </section>
@@ -130,24 +116,33 @@
 
     <footer class="site-footer">
       <p>
-        Built with <a href="https://github.com/mr-flowjangles/bot-factory-ui" target="_blank" rel="noopener noreferrer">Bot Factory UI</a> — a reusable RAG chatbot
+        Built with <a href="#">Bot Factory</a> — a reusable RAG chatbot
         framework
       </p>
     </footer>
 
     <!-- ================================================================
-         BOT CONFIG
-         - apiUrl: Your bot's API endpoint (must match bot_id in config.yml)
-         - botName: Display name used in chat labels
-         - placeholder: Input field placeholder text
+         SCRIPTS
+         
+         Load order matters:
+         1. BOT_CONFIG — defines the bot identity and API endpoint
+         2. formatter.js — registers guitarFormatMessage on BOT_CONFIG
+         3. chat.js — reads BOT_CONFIG.formatMessage at render time
+         4. navigation.js — nav highlighting (independent)
+         
+         To add a new bot: skip step 2 if no custom formatting needed.
+         chat.js falls back to plain text automatically.
          ================================================================ -->
     <script>
       window.BOT_CONFIG = {
-        apiUrl: "/api/your_bot",
-        botName: "YourBot",
-        placeholder: "Ask a question...",
+        apiUrl: "/api/guitar",
+        botName: "The Fret Detective",
+        placeholder: "Ask about guitar...",
       };
     </script>
+    <!-- Guitar-specific: tab line detection and monospace rendering -->
+    <script src="bot_scripts/guitar/formatter.js"></script>
+    <!-- Shared -->
     <script src="bot_scripts/chat.js"></script>
     <script src="bot_scripts/navigation.js"></script>
   </body>
