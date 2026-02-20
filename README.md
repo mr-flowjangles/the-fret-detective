@@ -37,7 +37,7 @@ cd bot-factory-ui
 make up
 ```
 
-Open [http://localhost:8080](http://localhost:8080) to see your bot.
+Open [http://localhost:3000](http://localhost:3000) to see your bot.
 
 ## Commands
 
