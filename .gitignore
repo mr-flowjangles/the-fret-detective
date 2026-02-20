@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Optional macOS metadata (safe to ignore)
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd

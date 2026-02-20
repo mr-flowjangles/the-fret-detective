@@ -1,0 +1,29 @@
+name: 508 Accessibility Check
+
+on:
+  pull_request:
+    paths:
+      - 'app/**'
+
+jobs:
+  accessibility:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pa11y-ci
+        run: npm install -g pa11y-ci
+
+      - name: Start local server
+        run: |
+          npx http-server app -p 8080 -s &
+          sleep 3
+
+      - name: Run 508 accessibility scan
+        run: pa11y-ci

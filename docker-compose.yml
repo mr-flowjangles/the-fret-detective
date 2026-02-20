@@ -1,0 +1,10 @@
+services:
+  web:
+    image: nginx:alpine
+    container_name: bot-factory-web
+    ports:
+      - "3000:80"
+    volumes:
+      - ./app:/usr/share/nginx/html:ro
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro  # Add nginx/ folder
+    restart: unless-stopped
