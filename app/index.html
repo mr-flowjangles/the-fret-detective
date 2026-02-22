@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="bot_styles/bot-factory.css" />
     <!-- Guitar-specific styles (tab rendering) -->
     <link rel="stylesheet" href="bot_styles/guitar/guitar.css" />
+    <link rel="stylesheet" href="bot_styles/guitar/guitar-mobile.css" />
+    <style>
+      /* Hide all sections by default; navigation.js shows the active one */
+      main.main-content > .section {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <!-- ================================================================
@@ -41,8 +48,10 @@
          ================================================================ -->
     <nav class="site-nav">
       <div class="nav-section-label">Topics</div>
-      <a href="#chat" class="active"> Chat </a>
-      <a href="#Reviews"> Reviews (Coming Soon) </a>
+      <a href="#welcome" class="active"> Welcome </a>
+      <a href="#chat"> The Fret Detective </a>
+      <a href="#reviews"> Reviews (Coming Soon) </a>
+      <a href="#stacks"> Stacks (Coming Soon) </a>
 
       <div class="nav-section-label">Reference</div>
       <a href="#about"> About </a>
@@ -55,6 +64,102 @@
          MAIN CONTENT
          ================================================================ -->
     <main class="main-content">
+      <section class="section" id="welcome">
+        <h2 class="section-title">Welcome</h2>
+        <div class="card welcome-card">
+          <p class="welcome-intro">
+            <strong>Welcome to The Fret Detective 🔎🎸</strong><br />
+            Got a guitar question? I'll solve it. Whether you're brand new,
+            getting back into it, or stuck in a "why does this sound like a
+            dying lawnmower" moment — ask me anything and I'll walk you through
+            it with clear steps.
+          </p>
+
+          <h2>Here's what I can help you with</h2>
+
+          <h2>🎸 Guitar Basics</h2>
+          <ul>
+            <li>Parts of the guitar (headstock, pickups, bridge, etc.)</li>
+            <li>String names and numbering (EADGBE)</li>
+            <li>How to hold the guitar and proper posture</li>
+            <li>Reading guitar tab notation</li>
+            <li>Understanding fret numbering</li>
+          </ul>
+
+          <h2>🎵 Chords</h2>
+          <ul>
+            <li>Open chords (A, Am, C, D, Dm, E, Em, F, G and more)</li>
+            <li>Barre chord shapes (E-shape and A-shape)</li>
+            <li>Seventh chords (A7, Am7, D7, E7, etc.)</li>
+            <li>Sus2 and Sus4 chords</li>
+            <li>Power chords</li>
+          </ul>
+
+          <h2>🔺 Triads (3-note chord voicings)</h2>
+          <ul>
+            <li>Major and minor triads for all 12 keys</li>
+            <li>Root position, 1st inversion, and 2nd inversion</li>
+            <li>Voicings on DGB and GBE string sets</li>
+            <li>
+              Position clusters by fret (play all chords in a key without moving
+              your hand)
+            </li>
+          </ul>
+
+          <h2>🎼 Scales</h2>
+          <ul>
+            <li>Minor pentatonic scale</li>
+            <li>Major pentatonic scale</li>
+            <li>Blues scale</li>
+          </ul>
+
+          <h2>🤘 Techniques</h2>
+          <ul>
+            <li>Strumming patterns</li>
+            <li>Palm muting</li>
+            <li>Hammer-ons and pull-offs</li>
+            <li>String bending</li>
+            <li>Alternate picking</li>
+            <li>Slides</li>
+          </ul>
+
+          <h2>🧠 Music Theory</h2>
+          <ul>
+            <li>Key signatures and the Circle of Fifths</li>
+            <li>Chord formulas (how chords are built)</li>
+            <li>Common chord progressions (I–IV–V, ii–V–I, etc.)</li>
+            <li>The CAGED system</li>
+          </ul>
+
+          <h2>🎛️ Gear &amp; Setup</h2>
+          <ul>
+            <li>String gauges explained</li>
+            <li>Pick thickness guide</li>
+            <li>Restringing your guitar</li>
+            <li>Tuning methods and reference pitches</li>
+          </ul>
+
+          <h2>📋 Practice Tips</h2>
+          <ul>
+            <li>How to structure your practice sessions</li>
+            <li>Building speed and accuracy</li>
+          </ul>
+
+          <h2>💬 How to use me</h2>
+          <p>Type a question like:</p>
+          <ul class="welcome-examples">
+            <li>"What are the notes in a G major triad?"</li>
+            <li>"Show me an easy F chord that doesn't wreck my hand."</li>
+            <li>"How do I play the blues scale in A?"</li>
+            <li>"Why are my bends sharp?"</li>
+          </ul>
+
+          <p class="welcome-tagline">
+            Bring the question. I'll bring the evidence. ✅
+          </p>
+        </div>
+      </section>
+
       <section class="section" id="chat">
         <h2 class="section-title">Ask The Fret Detective</h2>
 
@@ -66,11 +171,7 @@
           </div>
 
           <div class="chat-messages" id="chatMessages">
-            <div class="chat-message bot">
-              <div class="bot-label">The Fret Detective</div>
-              Hey! Ask me anything about electric guitar — restringing, tuning,
-              chords, theory. What do you want to learn?
-            </div>
+            <!-- Welcome message is streamed in by chat.js -->
           </div>
 
           <div class="chat-suggestions" id="chatSuggestions">
@@ -99,6 +200,20 @@
         </div>
       </section>
 
+      <section class="section" id="reviews">
+        <h2 class="section-title">Reviews</h2>
+        <div class="card">
+          <p>Coming soon — gear reviews, pedal breakdowns, and more.</p>
+        </div>
+      </section>
+
+      <section class="section" id="stacks">
+        <h2 class="section-title">Stacks</h2>
+        <div class="card">
+          <p>Coming soon — curated gear stacks and signal chain breakdowns.</p>
+        </div>
+      </section>
+
       <section class="section" id="about">
         <h2 class="section-title">About The Fret Detective</h2>
         <div class="card">
@@ -106,9 +221,10 @@
           <p>
             The Fret Detective is a RAG-powered chatbot built with the Bot
             Factory framework. It uses OpenAI embeddings for semantic search
-            across 60+ guitar knowledge entries and Claude Sonnet for natural
-            language responses. Ask it about restringing, tuning, triads, barre
-            chords, progressions, or the CAGED system.
+            across 100+ (and growing) guitar knowledge entries and Claude Sonnet
+            for natural language responses, powered by AWS Bedrock. Ask it about
+            restringing, tuning, triads, barre chords, progressions, or the
+            CAGED system.
           </p>
         </div>
       </section>
@@ -116,8 +232,15 @@
 
     <footer class="site-footer">
       <p>
-        Built with <a href="#">Bot Factory</a> — a reusable RAG chatbot
-        framework
+        Built with
+        <a
+          href="https://github.com/mr-flowjangles/bot-factory-ui"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Bot Factory
+        </a>
+        — a reusable RAG chatbot framework
       </p>
     </footer>
 

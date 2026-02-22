@@ -31,6 +31,76 @@ const config = window.BOT_CONFIG || {
 const conversationHistory = [];
 
 /**
+ * Default message formatter — renders text as plain text with line breaks.
+ * Bot-specific formatters (e.g. guitar/formatter.js) can override this
+ * by setting BOT_CONFIG.formatMessage.
+ */
+function defaultFormatMessage(text, container) {
+  const lines = text.split("\n");
+  lines.forEach((line, i) => {
+    const span = document.createElement("span");
+    span.textContent = line;
+    container.appendChild(span);
+    if (i < lines.length - 1) {
+      container.appendChild(document.createElement("br"));
+    }
+  });
+}
+
+/**
+ * Stream a welcome message into the chat on first load.
+ * Simulates the streaming UX so the message appears character by character.
+ */
+function streamWelcomeMessage() {
+  const welcomeText =
+    `Welcome to The Fret Detective 🔎🎸\n\n` +
+    `Got a guitar question? I'll solve it. New player, returning player, or stuck on a "why does this sound wrong?" moment ` +
+    `just ask and I'll give you clean, step-by-step answers.\n\n` +
+    `What I can help with:\n` +
+    `🎸 Guitar Basics — parts, string names (EADGBE), posture, tab, fret numbers\n` +
+    `🎵 Chords — open, barre, power, 7ths, sus2/sus4\n` +
+    `🔺 Triads — major/minor, inversions, DGB/GBE sets, position clusters\n` +
+    `🎼 Scales — minor pentatonic, major pentatonic, blues\n` +
+    `🤘 Techniques — strumming, palm muting, hammer-ons/pull-offs, bends, alternate picking, slides\n` +
+    `🧠 Music Theory — keys, Circle of Fifths, chord formulas, progressions, CAGED\n` +
+    `🎛️ Gear & Setup — string gauges, pick thickness, restringing, tuning\n` +
+    `📋 Practice — routines, speed, accuracy\n\n` +
+    `Bring your riff crimes. I'll interrogate the fretboard. ✅`;
+
+  const div = document.createElement("div");
+  div.className = "chat-message bot";
+  const label = document.createElement("div");
+  label.className = "bot-label";
+  label.textContent = config.botName;
+  div.appendChild(label);
+  chatMessages.appendChild(div);
+
+  let index = 0;
+  const chunkSize = 3; // characters per tick for natural speed
+  const interval = 15; // ms between ticks
+
+  function streamNext() {
+    if (index >= welcomeText.length) return;
+
+    index = Math.min(index + chunkSize, welcomeText.length);
+    const partial = welcomeText.substring(0, index);
+
+    // Clear previous content (keep the bot-label)
+    while (div.childNodes.length > 1) {
+      div.removeChild(div.lastChild);
+    }
+
+    const formatter = config.formatMessage || defaultFormatMessage;
+    formatter(partial, div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    requestAnimationFrame(() => setTimeout(streamNext, interval));
+  }
+
+  streamNext();
+}
+
+/**
  * Send a suggestion chip's text as a message
  */
 function sendSuggestion(chip) {
@@ -76,18 +146,8 @@ async function sendMessage() {
       }),
     });
 
-    typing.remove();
-
     let fullResponse = "";
-
-    // Streaming: render chunks as they arrive
-    const div = document.createElement("div");
-    div.className = "chat-message bot";
-    const label = document.createElement("div");
-    label.className = "bot-label";
-    label.textContent = config.botName;
-    div.appendChild(label);
-    chatMessages.appendChild(div);
+    let div = null;
 
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
@@ -99,6 +159,19 @@ async function sendMessage() {
       const chunk = decoder.decode(value, { stream: true });
       fullResponse += chunk;
 
+      // On first chunk: remove typing dots and create the bot bubble
+      if (!div) {
+        typing.remove();
+        div = document.createElement("div");
+        div.className = "chat-message bot";
+        const label = document.createElement("div");
+        label.className = "bot-label";
+        label.textContent = config.botName;
+        div.appendChild(label);
+        chatMessages.appendChild(div);
+      }
+
+      // Clear previous content (keep the bot-label)
       while (div.childNodes.length > 1) {
         div.removeChild(div.lastChild);
       }
@@ -106,6 +179,11 @@ async function sendMessage() {
       const formatter = config.formatMessage || defaultFormatMessage;
       formatter(fullResponse, div);
       chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Safety net: remove typing if stream ended with no chunks
+    if (!div) {
+      typing.remove();
     }
 
     conversationHistory.push(
@@ -163,6 +241,9 @@ function showTyping() {
 chatInput.addEventListener("keydown", function (e) {
   if (e.key === "Enter") sendMessage();
 });
+
+// Stream the welcome message when the chat section becomes visible
+streamWelcomeMessage();
 
 const warmupUrl =
   window.location.hostname === "localhost" ||

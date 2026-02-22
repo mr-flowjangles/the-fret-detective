@@ -15,3 +15,6 @@ Icon?
 *.tfstate
 *.tfstate.*
 *.tfplan
+
+#my files
+_scratch
