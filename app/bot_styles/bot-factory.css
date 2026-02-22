@@ -354,6 +354,7 @@ body::before {
   font-size: 0.88rem;
   line-height: 1.6;
   animation: fadeUp 0.3s ease both;
+  white-space: pre-wrap;
 }
 
 .chat-message.bot {
@@ -380,31 +381,33 @@ body::before {
   margin-bottom: 0.3rem;
 }
 
+/* Typing Indicator */
 .typing-indicator {
   display: flex;
+  align-items: center;
   gap: 4px;
-  padding: 0.8rem 1.1rem;
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  border-bottom-left-radius: 4px;
+  padding: var(--space-md);
+  background: var(--color-bot-bg);
+  border-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-sm);
   align-self: flex-start;
-  animation: fadeUp 0.3s ease both;
+  width: fit-content;
 }
 
 .typing-indicator span {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
+  background: var(--color-text-muted);
   border-radius: 50%;
-  background: var(--color-primary-dark);
-  animation: bounce 1.4s ease-in-out infinite;
+  animation: typing-bounce 1.4s infinite ease-in-out both;
 }
 
 .typing-indicator span:nth-child(2) {
-  animation-delay: 0.2s;
+  animation-delay: 0.16s;
 }
+
 .typing-indicator span:nth-child(3) {
-  animation-delay: 0.4s;
+  animation-delay: 0.32s;
 }
 
 @keyframes bounce {
@@ -503,6 +506,55 @@ body::before {
 .chat-send-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 16px rgba(212, 160, 23, 0.3);
+}
+
+/* ================================================================
+   WELCOME CARD
+   ================================================================ */
+.welcome-card {
+  max-width: 1000px;
+}
+
+.welcome-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--color-primary-light);
+  margin-top: 1.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.welcome-card h2:first-of-type {
+  margin-top: 1rem;
+}
+
+.welcome-card ul {
+  margin: 0.3rem 0 0 1.2rem;
+  padding: 0;
+  list-style: disc;
+}
+
+.welcome-card ul li {
+  margin-bottom: 0.2rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.welcome-card .welcome-intro {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.welcome-card .welcome-tagline {
+  margin-top: 1.4rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-primary-light);
+}
+
+.welcome-card .welcome-examples {
+  font-style: italic;
 }
 
 /* ================================================================
