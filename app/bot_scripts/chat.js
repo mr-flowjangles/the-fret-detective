@@ -55,17 +55,7 @@ function streamWelcomeMessage() {
   const welcomeText =
     `Welcome to The Fret Detective 🔎🎸\n\n` +
     `Got a guitar question? I'll solve it. New player, returning player, or stuck on a "why does this sound wrong?" moment ` +
-    `just ask and I'll give you clean, step-by-step answers.\n\n` +
-    `What I can help with:\n` +
-    `🎸 Guitar Basics — parts, string names (EADGBE), posture, tab, fret numbers\n` +
-    `🎵 Chords — open, barre, power, 7ths, sus2/sus4\n` +
-    `🔺 Triads — major/minor, inversions, DGB/GBE sets, position clusters\n` +
-    `🎼 Scales — minor pentatonic, major pentatonic, blues\n` +
-    `🤘 Techniques — strumming, palm muting, hammer-ons/pull-offs, bends, alternate picking, slides\n` +
-    `🧠 Music Theory — keys, Circle of Fifths, chord formulas, progressions, CAGED\n` +
-    `🎛️ Gear & Setup — string gauges, pick thickness, restringing, tuning\n` +
-    `📋 Practice — routines, speed, accuracy\n\n` +
-    `Bring your riff crimes. I'll interrogate the fretboard. ✅`;
+    `just ask and I'll give you clean, step-by-step answers.`;
 
   const div = document.createElement("div");
   div.className = "chat-message bot";
