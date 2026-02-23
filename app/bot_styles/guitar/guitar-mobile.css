@@ -1,0 +1,9 @@
+/* ================================================================
+   GUITAR BOT — Mobile Overrides
+   ================================================================ */
+
+@media (max-width: 768px) {
+  .chat-container {
+    height: calc(100vh - var(--header-height) - 120px);
+  }
+}
