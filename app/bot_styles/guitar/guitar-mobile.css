@@ -3,7 +3,6 @@
    ================================================================ */
 
 @media (max-width: 768px) {
-  .chat-container {
-    height: calc(100vh - var(--header-height) - 120px);
-  }
+  /* Chat popup height on mobile is controlled via --chat-popup-height
+     in bot-factory.css responsive block (70vh). No override needed here. */
 }
