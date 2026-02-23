@@ -19,6 +19,8 @@
   --font-body: "DM Sans", system-ui, sans-serif;
   --nav-width: 240px;
   --header-height: 155px;
+  --chat-popup-width: 400px;
+  --chat-popup-height: 560px;
 }
 
 /* ================================================================
@@ -310,23 +312,110 @@ body::before {
 }
 
 /* ================================================================
-   CHATBOT — EMBEDDED IN BODY
+   FLOATING CHAT POPUP
+   ================================================================ */
+
+/* The popup panel */
+.chat-popup {
+  position: fixed;
+  bottom: calc(1.5rem + 56px + 0.75rem); /* above FAB */
+  right: 1.5rem;
+  width: var(--chat-popup-width);
+  height: var(--chat-popup-height);
+  z-index: 200;
+
+  /* Hidden state */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(16px) scale(0.97);
+  transform-origin: bottom right;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.chat-popup.chat-popup--open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+/* Floating Action Button */
+.chat-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 201;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  border: none;
+  border-radius: 28px;
+  padding: 0 1.25rem 0 0.9rem;
+  height: 56px;
+  color: var(--color-bg);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 20px rgba(212, 160, 23, 0.35),
+    0 2px 8px rgba(0, 0, 0, 0.4);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-radius 0.2s ease;
+}
+
+.chat-fab:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 28px rgba(212, 160, 23, 0.45),
+    0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.chat-fab:active {
+  transform: translateY(0);
+}
+
+.chat-fab-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* When popup is open, the FAB label changes — handled via JS class */
+.chat-fab--open .chat-fab-label {
+  /* label text is controlled by JS if desired; CSS can rotate icon */
+}
+
+/* ================================================================
+   CHATBOT — INSIDE POPUP
    ================================================================ */
 .chat-container {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-left: 3px solid var(--color-primary-dark);
-  border-radius: 6px;
-  margin-top: 1rem;
+  border-top: 2px solid var(--color-primary-dark);
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 250px);
+  height: 100%;
   overflow: hidden;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.6),
+    0 8px 24px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(212, 160, 23, 0.08);
   transition: border-color 0.3s ease;
 }
 
 .chat-container:focus-within {
-  border-left-color: var(--color-primary);
+  border-top-color: var(--color-primary);
 }
 
 .chat-header {
@@ -336,6 +425,7 @@ body::before {
   align-items: center;
   gap: 0.75rem;
   background: linear-gradient(135deg, #252218, #1e1e1e);
+  flex-shrink: 0;
 }
 
 .chat-header-dot {
@@ -344,6 +434,7 @@ body::before {
   border-radius: 50%;
   background: var(--color-primary);
   box-shadow: 0 0 8px rgba(212, 160, 23, 0.4);
+  flex-shrink: 0;
 }
 
 .chat-header-title {
@@ -358,6 +449,30 @@ body::before {
   margin-left: auto;
 }
 
+/* Close button inside popup header */
+.chat-close-btn {
+  background: transparent;
+  border: 1px solid var(--color-border-light);
+  border-radius: 50%;
+  color: var(--color-text-muted);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  margin-left: 0.5rem;
+}
+
+.chat-close-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary-light);
+  background: var(--color-primary-glow);
+}
+
 .chat-messages {
   flex: 1;
   padding: 1.25rem 1.5rem;
@@ -368,7 +483,7 @@ body::before {
 }
 
 .chat-message {
-  max-width: 80%;
+  max-width: 85%;
   padding: 0.8rem 1.1rem;
   border-radius: 12px;
   font-size: 0.88rem;
@@ -406,10 +521,11 @@ body::before {
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: var(--space-md);
-  background: var(--color-bot-bg);
-  border-radius: var(--radius-md);
-  border-bottom-left-radius: var(--radius-sm);
+  padding: 0.8rem 1.1rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  border-bottom-left-radius: 4px;
   align-self: flex-start;
   width: fit-content;
 }
@@ -430,7 +546,7 @@ body::before {
   animation-delay: 0.32s;
 }
 
-@keyframes bounce {
+@keyframes typing-bounce {
   0%,
   60%,
   100% {
@@ -450,6 +566,7 @@ body::before {
   gap: 0.45rem;
   border-top: 1px solid var(--color-border);
   background: rgba(26, 26, 26, 0.5);
+  flex-shrink: 0;
 }
 
 .suggestion-chip {
@@ -477,6 +594,7 @@ body::before {
   display: flex;
   gap: 0.6rem;
   background: var(--color-bg);
+  flex-shrink: 0;
 }
 
 .chat-input-area input {
@@ -603,6 +721,8 @@ body::before {
   :root {
     --nav-width: 0px;
     --header-height: 100px;
+    --chat-popup-width: calc(100vw - 2rem);
+    --chat-popup-height: 70vh;
   }
   .nav-toggle {
     display: inline-flex;
@@ -648,7 +768,12 @@ body::before {
   .header-badge {
     display: none;
   }
-  .chat-container {
-    height: 420px;
+  .chat-popup {
+    right: 1rem;
+    bottom: calc(1rem + 56px + 0.75rem);
+  }
+  .chat-fab {
+    right: 1rem;
+    bottom: 1rem;
   }
 }

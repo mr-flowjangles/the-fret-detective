@@ -58,7 +58,6 @@
     <nav class="site-nav" id="siteNav">
       <div class="nav-section-label">Topics</div>
       <a href="#welcome" class="active"> Welcome </a>
-      <a href="#chat"> The Fret Detective </a>
       <a href="#reviews"> Reviews (Coming Soon) </a>
       <a href="#stacks"> Stacks (Coming Soon) </a>
 
@@ -169,48 +168,6 @@
         </div>
       </section>
 
-      <section class="section" id="chat">
-        <h2 class="section-title">Ask The Fret Detective</h2>
-
-        <div class="chat-container">
-          <div class="chat-header">
-            <div class="chat-header-dot"></div>
-            <span class="chat-header-title">The Fret Detective</span>
-            <span class="chat-header-status">Online</span>
-          </div>
-
-          <div class="chat-messages" id="chatMessages">
-            <!-- Welcome message is streamed in by chat.js -->
-          </div>
-
-          <div class="chat-suggestions" id="chatSuggestions">
-            <button class="suggestion-chip" onclick="sendSuggestion(this)">
-              How do I restring my guitar?
-            </button>
-            <button class="suggestion-chip" onclick="sendSuggestion(this)">
-              Show me a G major triad
-            </button>
-            <button class="suggestion-chip" onclick="sendSuggestion(this)">
-              What is the CAGED system?
-            </button>
-            <button class="suggestion-chip" onclick="sendSuggestion(this)">
-              How do I tune my guitar?
-            </button>
-          </div>
-
-          <div class="chat-input-area">
-            <input
-              type="text"
-              id="chatInput"
-              name="chatInput"
-              aria-label="Ask The Fret Detective a question"
-              placeholder="Ask about guitar..."
-            />
-            <button class="chat-send-btn" onclick="sendMessage()">Send</button>
-          </div>
-        </div>
-      </section>
-
       <section class="section" id="reviews">
         <h2 class="section-title">Reviews</h2>
         <div class="card">
@@ -256,6 +213,68 @@
     </footer>
 
     <!-- ================================================================
+         FLOATING CHAT WIDGET
+         ================================================================ -->
+    <div class="chat-popup" id="chatPopup" aria-hidden="true">
+      <div class="chat-container">
+        <div class="chat-header">
+          <div class="chat-header-dot"></div>
+          <span class="chat-header-title">The Fret Detective</span>
+          <span class="chat-header-status">Online</span>
+          <button
+            class="chat-close-btn"
+            onclick="toggleChatPopup()"
+            aria-label="Close chat"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+          <!-- Welcome message is streamed in by chat.js -->
+        </div>
+
+        <div class="chat-suggestions" id="chatSuggestions">
+          <button class="suggestion-chip" onclick="sendSuggestion(this)">
+            How do I restring my guitar?
+          </button>
+          <button class="suggestion-chip" onclick="sendSuggestion(this)">
+            Show me a G major triad
+          </button>
+          <button class="suggestion-chip" onclick="sendSuggestion(this)">
+            What is the CAGED system?
+          </button>
+          <button class="suggestion-chip" onclick="sendSuggestion(this)">
+            How do I tune my guitar?
+          </button>
+        </div>
+
+        <div class="chat-input-area">
+          <input
+            type="text"
+            id="chatInput"
+            name="chatInput"
+            aria-label="Ask The Fret Detective a question"
+            placeholder="Ask about guitar..."
+          />
+          <button class="chat-send-btn" onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button
+      class="chat-fab"
+      id="chatFab"
+      onclick="toggleChatPopup()"
+      aria-label="Open The Fret Detective chat"
+      title="Ask The Fret Detective"
+    >
+      🎸
+      <span class="chat-fab-label">Ask me!</span>
+    </button>
+
+    <!-- ================================================================
          SCRIPTS
          
          Load order matters:
@@ -273,6 +292,32 @@
         botName: "The Fret Detective",
         placeholder: "Ask about guitar...",
       };
+
+      function toggleChatPopup() {
+        const popup = document.getElementById("chatPopup");
+        const fab = document.getElementById("chatFab");
+        const isOpen = popup.classList.toggle("chat-popup--open");
+        popup.setAttribute("aria-hidden", String(!isOpen));
+        fab.classList.toggle("chat-fab--open", isOpen);
+
+        if (isOpen) {
+          // Focus input when opened
+          setTimeout(() => {
+            const input = document.getElementById("chatInput");
+            if (input) input.focus();
+          }, 300);
+        }
+      }
+
+      // Close popup when pressing Escape
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          const popup = document.getElementById("chatPopup");
+          if (popup.classList.contains("chat-popup--open")) {
+            toggleChatPopup();
+          }
+        }
+      });
     </script>
     <!-- Guitar-specific: tab line detection and monospace rendering -->
     <script src="bot_scripts/guitar/formatter.js"></script>
