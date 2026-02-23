@@ -27,6 +27,15 @@
          HEADER
          ================================================================ -->
     <header class="site-header">
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="siteNav"
+      >
+        ☰
+      </button>
       <div class="header-logo-area">
         <img
           src="assets/guitar/guitarLogo.png"
@@ -46,7 +55,7 @@
     <!-- ================================================================
          LEFT NAV
          ================================================================ -->
-    <nav class="site-nav">
+    <nav class="site-nav" id="siteNav">
       <div class="nav-section-label">Topics</div>
       <a href="#welcome" class="active"> Welcome </a>
       <a href="#chat"> The Fret Detective </a>
@@ -193,6 +202,8 @@
             <input
               type="text"
               id="chatInput"
+              name="chatInput"
+              aria-label="Ask The Fret Detective a question"
               placeholder="Ask about guitar..."
             />
             <button class="chat-send-btn" onclick="sendMessage()">Send</button>

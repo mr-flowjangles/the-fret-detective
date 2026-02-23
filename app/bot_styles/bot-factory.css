@@ -67,6 +67,26 @@ body::before {
   z-index: 100;
 }
 
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--color-border-light);
+  color: var(--color-primary-light);
+  border-radius: 6px;
+  font-size: 1.2rem;
+  line-height: 1;
+  width: 2.3rem;
+  height: 2.3rem;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.nav-toggle:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-glow);
+}
+
 .site-header::after {
   content: "";
   position: absolute;
@@ -584,14 +604,41 @@ body::before {
     --nav-width: 0px;
     --header-height: 100px;
   }
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .site-header {
+    padding-right: 1rem;
+  }
   .site-nav {
-    display: none;
+    display: flex;
+    top: var(--header-height);
+    width: 100%;
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
+    border-right: none;
+    border-bottom: none;
+    pointer-events: none;
+    transition: max-height 0.25s ease;
+    z-index: 95;
+  }
+  .site-nav.nav-open {
+    max-height: calc(100vh - var(--header-height));
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+    overflow-y: auto;
+    pointer-events: auto;
   }
   .header-text {
     display: none;
   }
   .header-logo-area {
     width: 100%;
+    justify-content: center;
   }
   .header-image {
     width: auto;
