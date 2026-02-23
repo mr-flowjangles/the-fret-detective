@@ -31,6 +31,9 @@ document.querySelectorAll(".site-nav a").forEach((link) => {
 
       // Show the target section
       showSection(href.substring(1));
+
+      // Collapse mobile nav after selection
+      closeMobileNav();
     }
   });
 });
@@ -43,3 +46,27 @@ if (activeLink) {
     showSection(href.substring(1));
   }
 }
+
+
+const nav = document.getElementById("siteNav");
+const navToggle = document.querySelector(".nav-toggle");
+
+function closeMobileNav() {
+  if (nav && navToggle) {
+    nav.classList.remove("nav-open");
+    navToggle.setAttribute("aria-expanded", "false");
+  }
+}
+
+if (navToggle && nav) {
+  navToggle.addEventListener("click", () => {
+    const isOpen = nav.classList.toggle("nav-open");
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+}
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 768) {
+    closeMobileNav();
+  }
+});
