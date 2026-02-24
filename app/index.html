@@ -15,6 +15,7 @@
     <!-- Guitar-specific styles (tab rendering) -->
     <link rel="stylesheet" href="bot_styles/guitar/guitar.css" />
     <link rel="stylesheet" href="bot_styles/guitar/guitar-mobile.css" />
+    <link rel="stylesheet" href="bot_styles/guitar/disclaimer.css" />
     <style>
       /* Hide all sections by default; navigation.js shows the active one */
       main.main-content > .section {
@@ -324,5 +325,74 @@
     <!-- Shared -->
     <script src="bot_scripts/chat.js"></script>
     <script src="bot_scripts/navigation.js"></script>
+    <script src="bot_scripts/guitar/disclaimer.js"></script>
+
+    <!-- AI Disclaimer Banner -->
+    <div id="ai-disclaimer-banner" class="ai-disclaimer-banner hidden">
+      <div class="ai-disclaimer-content">
+        <div class="ai-disclaimer-icon">⚠️</div>
+        <div class="ai-disclaimer-text">
+          <strong>AI-Generated Advice — Use at Your Own Risk</strong>
+          <p>
+            The Fret Detective uses artificial intelligence to answer
+            guitar-related questions. Responses may be inaccurate, incomplete,
+            or not suitable for your specific situation. By using this tool, you
+            agree to our
+            <a href="#" class="ai-disclaimer-link" id="terms-link"
+              >Terms of Use</a
+            >
+            and acknowledge that you assume all risk associated with acting on
+            any advice provided. Always consult a qualified guitar technician
+            for repairs or setup decisions.
+          </p>
+        </div>
+        <div class="ai-disclaimer-actions">
+          <button id="ai-disclaimer-accept" class="ai-disclaimer-btn accept">
+            I Understand &amp; Agree
+          </button>
+          <button id="ai-disclaimer-decline" class="ai-disclaimer-btn decline">
+            Decline
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional: Terms of Use Modal -->
+    <div id="terms-modal" class="terms-modal hidden">
+      <div class="terms-modal-inner">
+        <h2>Terms of Use</h2>
+        <div class="terms-body">
+          <p><strong>Last updated: February 2026</strong></p>
+          <p>
+            The Fret Detective ("Service") is an AI-powered guitar assistant
+            provided for informational and entertainment purposes only.
+          </p>
+          <h3>No Professional Advice</h3>
+          <p>
+            Nothing provided by this Service constitutes professional guitar
+            repair, music instruction, or technical advice. All AI-generated
+            responses are experimental and may contain errors.
+          </p>
+          <h3>Assumption of Risk</h3>
+          <p>
+            You expressly agree that your use of this Service is at your sole
+            risk. The operators of The Fret Detective shall not be liable for
+            any direct, indirect, incidental, or consequential damages arising
+            from your use of or reliance on any information provided.
+          </p>
+          <h3>No Warranty</h3>
+          <p>
+            This Service is provided "as is" without warranty of any kind,
+            express or implied.
+          </p>
+          <h3>Acceptance</h3>
+          <p>
+            By clicking "I Understand & Agree," you confirm that you have read,
+            understood, and agree to these Terms of Use.
+          </p>
+        </div>
+        <button id="close-terms" class="ai-disclaimer-btn accept">Close</button>
+      </div>
+    </div>
   </body>
 </html>

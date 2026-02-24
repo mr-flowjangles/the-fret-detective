@@ -1,0 +1,153 @@
+/* ── AI Disclaimer Banner ─────────────────────────────────── */
+.ai-disclaimer-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-top: 3px solid #e8a020;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.5);
+  padding: 16px 24px;
+  animation: slideUpBanner 0.4s ease;
+}
+
+.ai-disclaimer-banner.hidden {
+  display: none;
+}
+
+@keyframes slideUpBanner {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+
+.ai-disclaimer-content {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.ai-disclaimer-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ai-disclaimer-text {
+  flex: 1;
+  color: #e0e0e0;
+}
+
+.ai-disclaimer-text strong {
+  display: block;
+  font-size: 1rem;
+  color: #e8a020;
+  margin-bottom: 6px;
+}
+
+.ai-disclaimer-text p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #b0b0c0;
+}
+
+.ai-disclaimer-link {
+  color: #e8a020;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ai-disclaimer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.ai-disclaimer-btn {
+  padding: 10px 22px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s;
+  white-space: nowrap;
+}
+
+.ai-disclaimer-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.ai-disclaimer-btn.accept {
+  background: #e8a020;
+  color: #1a1a2e;
+}
+
+.ai-disclaimer-btn.decline {
+  background: transparent;
+  color: #888;
+  border: 1px solid #444;
+}
+
+/* ── Terms Modal ──────────────────────────────────────────── */
+.terms-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.terms-modal.hidden { display: none; }
+
+.terms-modal-inner {
+  background: #1e1e2e;
+  border: 1px solid #e8a020;
+  border-radius: 12px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 28px;
+  color: #e0e0e0;
+}
+
+.terms-modal-inner h2 {
+  color: #e8a020;
+  margin-top: 0;
+}
+
+.terms-modal-inner h3 {
+  color: #c0c0d0;
+  font-size: 0.95rem;
+  margin-top: 16px;
+}
+
+.terms-body p {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #b0b0c0;
+}
+
+/* ── Mobile ───────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .ai-disclaimer-content {
+    flex-direction: column;
+  }
+  .ai-disclaimer-actions {
+    flex-direction: row;
+    width: 100%;
+  }
+  .ai-disclaimer-btn {
+    flex: 1;
+    text-align: center;
+  }
+}
