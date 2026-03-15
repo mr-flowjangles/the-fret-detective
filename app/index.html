@@ -289,7 +289,9 @@
          ================================================================ -->
     <script>
       window.BOT_CONFIG = {
-        apiUrl: "/api/guitar",
+        apiUrl: "https://4bu5vwwizdql4wzwh6dqhke62m0oyrbk.lambda-url.us-east-1.on.aws",
+        botId: "the-fret-detective",
+        apiKey: "bfk_dmg-Cbus-BHQV9VjyFBEtprxmXrCpqHqF83uRyhGLO4",
         botName: "The Fret Detective",
         placeholder: "Ask about guitar...",
       };
@@ -302,6 +304,8 @@
         fab.classList.toggle("chat-fab--open", isOpen);
 
         if (isOpen) {
+          // Warm up Lambda when chat is opened
+          if (typeof warmup === "function") warmup();
           // Focus input when opened
           setTimeout(() => {
             const input = document.getElementById("chatInput");
