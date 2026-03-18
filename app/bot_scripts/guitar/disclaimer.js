@@ -12,7 +12,10 @@
 
   function showBanner() {
     const banner = document.getElementById("ai-disclaimer-banner");
-    if (banner) banner.classList.remove("hidden");
+    if (banner) {
+      banner.style.display = "";
+      banner.classList.remove("hidden");
+    }
   }
 
   function hideBanner() {
@@ -53,7 +56,9 @@
       .getElementById("terms-link")
       .addEventListener("click", function (e) {
         e.preventDefault();
-        document.getElementById("terms-modal").classList.remove("hidden");
+        var modal = document.getElementById("terms-modal");
+        modal.style.display = "";
+        modal.classList.remove("hidden");
       });
 
     document
